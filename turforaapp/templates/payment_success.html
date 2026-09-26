@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Payment Successful</title>
+</head>
+<style>
+.home-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.home-btn:hover {
+    background-color: #0056b3;
+}
+</style>
+<body>
+
+    <div style="text-align:center; margin-top:100px;">
+
+        <h1>✅ Payment Successful!</h1>
+
+        <h2>₹{{ payment.amount }}</h2>
+
+        <p>
+            Booking ID:
+            <strong>#TUR-{{ booking.id }}</strong>
+        </p>
+
+        <p>
+            {{ booking.turf.turf_name }}
+        </p>
+
+        <a href="{% url 'home' booking.player.id %}"  class="home-btn">
+            Go to Home
+        </a>
+
+    </div>
+
+</body>
+
+</html>

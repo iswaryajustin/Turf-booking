@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turfora · Edit Profile</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f8fe;
+      color: #0b1d2b;
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .edit-container {
+      max-width: 820px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 48px;
+      box-shadow: 0 30px 60px -20px rgba(0, 20, 30, 0.25), 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+      padding: 3rem 3.5rem;
+      transition: all 0.2s ease;
+    }
+    /* header */
+    .edit-header {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding-bottom: 1.8rem;
+      border-bottom: 1px solid #edf2f7;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #5d7388;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.15s;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      background: #f0f5fc;
+    }
+    .back-link:hover {
+      background: #e5edf5;
+      color: #1a5cff;
+    }
+    .edit-title h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0b1d2b;
+    }
+    .edit-title p {
+      color: #5d7388;
+      font-size: 0.95rem;
+    }
+
+    /* logo mini */
+    .logo-mini {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: auto;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #0b1d2b;
+    }
+    .logo-mini svg { width: 32px; height: 32px; }
+    .logo-mini span { background: linear-gradient(145deg,#0b1d2b,#1a5cff);  
+    background-clip: text;-webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+    /* form */
+    .edit-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .field-group label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.3px;
+      color: #1e3a5f;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .field-group label i {
+      color: #7a94af;
+      width: 18px;
+      font-size: 0.9rem;
+    }
+    .field-group .input-wrapper {
+      display: flex;
+      align-items: center;
+      background: #fafcff;
+      border-radius: 20px;
+      border: 1.5px solid #e2eaf2;
+      transition: 0.2s ease;
+      padding: 0 1.2rem;
+      position: relative;
+    }
+    .field-group .input-wrapper:focus-within {
+      border-color: #1a5cff;
+      background: #ffffff;
+      box-shadow: 0 4px 14px rgba(26, 92, 255, 0.08);
+    }
+    .field-group .input-wrapper input {
+      width: 100%;
+      padding: 0.85rem 0 0.85rem 0.6rem;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      font-family: inherit;
+      color: #0b1d2b;
+      outline: none;
+    }
+    .field-group .input-wrapper input::placeholder {
+      color: #a0b8cf;
+      font-weight: 400;
+    }
+
+    /* password field with toggle */
+    .password-wrapper {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .password-wrapper input {
+      flex: 1;
+      padding: 0.85rem 0 0.85rem 0.6rem;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      font-family: inherit;
+      color: #0b1d2b;
+      outline: none;
+    }
+    .password-wrapper .toggle-pwd {
+      background: transparent;
+      border: none;
+      color: #7a94af;
+      cursor: pointer;
+      padding: 0.4rem 0.2rem;
+      font-size: 1rem;
+      transition: 0.15s;
+    }
+    .password-wrapper .toggle-pwd:hover {
+      color: #1a5cff;
+    }
+
+    .field-hint {
+      font-size: 0.75rem;
+      color: #6f8aa3;
+      padding-left: 2.2rem;
+      margin-top: 0.1rem;
+    }
+
+    /* change password section */
+    .password-section {
+      background: #f9fcff;
+      border-radius: 24px;
+      padding: 1.8rem 2rem;
+      border: 1px solid #eef3f8;
+      margin-top: 0.5rem;
+    }
+    .password-section .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0b1d2b;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .password-section .section-title i {
+      color: #1a5cff;
+    }
+    .password-section .field-group:last-child {
+      margin-bottom: 0;
+    }
+
+    /* action buttons */
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.8rem;
+      padding-top: 1.8rem;
+      border-top: 1px solid #edf2f7;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .btn {
+      padding: 0.8rem 2.2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: #1a5cff;
+      color: white;
+      box-shadow: 0 8px 24px -8px rgba(26, 92, 255, 0.35);
+    }
+    .btn-primary:hover {
+      background: #0f4ad6;
+      transform: scale(1.02);
+      box-shadow: 0 12px 32px -10px rgba(26, 92, 255, 0.45);
+    }
+    .btn-outline {
+      background: transparent;
+      color: #1e3a5f;
+      border: 1.5px solid #d0dce8;
+    }
+    .btn-outline:hover {
+      background: #f2f6fe;
+      border-color: #b0c6dd;
+    }
+
+    /* responsive */
+    @media (max-width: 640px) {
+      .edit-container {
+        padding: 2rem 1.5rem;
+        border-radius: 32px;
+      }
+      .edit-header {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+      .logo-mini {
+        margin-left: 0;
+      }
+      .edit-title h1 {
+        font-size: 1.5rem;
+      }
+      .field-group .input-wrapper {
+        padding: 0 1rem;
+      }
+      .field-group .input-wrapper input,
+      .password-wrapper input {
+        padding: 0.75rem 0 0.75rem 0.4rem;
+        font-size: 0.95rem;
+      }
+      .password-section {
+        padding: 1.2rem 1rem;
+      }
+      .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn {
+        justify-content: center;
+        padding: 0.8rem 1.5rem;
+      }
+    }
+    @media (max-width: 420px) {
+      .edit-container {
+        padding: 1.5rem 1rem;
+        border-radius: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="edit-container">
+
+    <!-- header -->
+    <div class="edit-header">
+      <a href="{% url 'userprofile' user.id%}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Profile</a>
+      <div class="edit-title">
+        <h1>Edit Profile</h1>
+        <p>Update your account information</p>
+      </div>
+      <div class="logo-mini">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:32px;height:32px;">
+          <rect x="4" y="20" width="56" height="28" rx="14" fill="#8BC34A" opacity="0.9" />
+          <rect x="8" y="24" width="48" height="20" rx="10" fill="#689F38" opacity="0.7" />
+          <path d="M18 26 L28 20 L38 26 L32 34 L26 34 L18 26Z" fill="#CDDC39" opacity="0.9" />
+          <path d="M32 20 L38 14 L44 20 L40 26 L34 26 L32 20Z" fill="#FFEB3B" opacity="0.8" />
+          <circle cx="32" cy="40" r="6" fill="#33691E" opacity="0.6" />
+          <circle cx="32" cy="40" r="3" fill="#AFB42B" opacity="0.9" />
+        </svg>
+        <span>Turfora</span>
+      </div>
+    </div>
+
+    <!-- edit form -->
+    <form class="edit-form" action="#" method="post">
+      {%csrf_token%}
+      <!-- Username -->
+      <div class="field-group">
+        <label for="username"><i class="fas fa-user"></i> Username</label>
+        <div class="input-wrapper">
+          <input type="text" id="username" name="username" value="{{user.username}}" placeholder="Enter username" required />
+        </div>
+        <div class="field-hint">This is your public display name.</div>
+      </div>
+
+      <!-- Email -->
+      <div class="field-group">
+        <label for="email"><i class="fas fa-envelope"></i> Email address</label>
+        <div class="input-wrapper">
+          <input type="email" id="email" name="email" value="{{user.email}}" placeholder="Enter email" required />
+        </div>
+        <div class="field-hint">We'll send booking confirmations here.</div>
+      </div>
+
+      <!-- Phone -->
+      <div class="field-group">
+        <label for="phone"><i class="fas fa-phone"></i> Phone number</label>
+        <div class="input-wrapper">
+          <input type="tel" id="phone" name="phone" value="{{user.phone}}" placeholder="Enter phone number" required />
+        </div>
+        <div class="field-hint">Used for booking reminders and updates.</div>
+      </div>
+
+      <!-- Change Password Section -->
+      <div class="password-section">
+        <div class="section-title">
+          <i class="fas fa-key"></i> Change Password
+        </div>
+
+        <!-- Current Password -->
+        <div class="field-group" style="margin-bottom:1.2rem;">
+          <label for="currentPassword"><i class="fas fa-lock"></i> Current Password</label>
+          <div class="input-wrapper">
+            <div class="password-wrapper">
+              <input type="password" id="currentPassword" name="currentPassword" placeholder="Enter current password" />
+              <button type="button" class="toggle-pwd" data-target="currentPassword" aria-label="Toggle password visibility">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- New Password -->
+        <div class="field-group" style="margin-bottom:1.2rem;">
+          <label for="newPassword"><i class="fas fa-lock"></i> New Password</label>
+          <div class="input-wrapper">
+            <div class="password-wrapper">
+              <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password" />
+              <button type="button" class="toggle-pwd" data-target="newPassword" aria-label="Toggle password visibility">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div class="field-hint">Min. 8 characters with at least one number and symbol.</div>
+        </div>
+
+        <!-- Confirm New Password -->
+        <div class="field-group">
+          <label for="confirmNewPassword"><i class="fas fa-check-circle"></i> Confirm New Password</label>
+          <div class="input-wrapper">
+            <div class="password-wrapper">
+              <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm new password" />
+              <button type="button" class="toggle-pwd" data-target="confirmNewPassword" aria-label="Toggle password visibility">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div class="field-hint">Re-enter your new password to confirm.</div>
+        </div>
+      </div>
+
+      <!-- actions -->
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+        <a href="#" class="btn btn-outline"><i class="fas fa-times"></i> Cancel</a>
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- password toggle script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Toggle for all password fields
+      document.querySelectorAll('.toggle-pwd').forEach(button => {
+        button.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const input = document.getElementById(targetId);
+          if (input) {
+            const icon = this.querySelector('i');
+            if (input.type === 'password') {
+              input.type = 'text';
+              icon.classList.remove('fa-eye');
+              icon.classList.add('fa-eye-slash');
+            } else {
+              input.type = 'password';
+              icon.classList.remove('fa-eye-slash');
+              icon.classList.add('fa-eye');
+            }
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

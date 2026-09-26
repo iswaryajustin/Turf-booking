@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turfora · Booking History</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f5fc;
+            color: #0b1d2b;
+            padding: 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .history-container {
+            max-width: 1000px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 48px;
+            box-shadow: 0 30px 60px -20px rgba(0, 20, 30, 0.25), 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            padding: 3rem 3.5rem;
+            transition: all 0.2s ease;
+        }
+
+        /* header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #edf2f7;
+            margin-bottom: 2rem;
+        }
+
+        .page-header .title-group h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0b1d2b;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .page-header .title-group h2 i {
+            color: #1a5cff;
+        }
+
+        .page-header .title-group .sub {
+            color: #5d7388;
+            font-size: 0.9rem;
+        }
+
+        .page-header .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #5d7388;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.15s;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            background: #f0f5fc;
+            font-size: 0.9rem;
+        }
+
+        .page-header .back-btn:hover {
+            background: #e5edf5;
+            color: #1a5cff;
+        }
+
+        /* logo mini */
+        .logo-mini {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0b1d2b;
+        }
+
+        .logo-mini svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .logo-mini span {
+            background: linear-gradient(145deg, #0b1d2b, #1a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* filter bar */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.8rem 1rem;
+            background: #f9fcff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid #e2eaf2;
+            margin-bottom: 1.8rem;
+        }
+
+        .filter-bar .search-wrapper {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .filter-bar .search-wrapper i {
+            color: #7a94af;
+            margin-right: 0.6rem;
+        }
+
+        .filter-bar .search-wrapper input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .filter-bar .search-wrapper input::placeholder {
+            color: #a0b8cf;
+        }
+
+        .filter-bar .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-bar .filter-group select {
+            background: white;
+            border: 1px solid #dce4ed;
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1e3a5f;
+            outline: none;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 0.4rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1e3a5f;
+            border: 1.5px solid #d0dce8;
+        }
+
+        .btn-outline:hover {
+            background: #f2f6fe;
+        }
+
+        .btn-primary {
+            background: #1a5cff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f4ad6;
+        }
+
+        .btn-sm {
+            padding: 0.3rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        /* table */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        table th {
+            text-align: left;
+            padding: 0.8rem 0.8rem;
+            font-weight: 600;
+            color: #5d7388;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-bottom: 2px solid #edf2f7;
+        }
+
+        table td {
+            padding: 0.8rem 0.8rem;
+            border-bottom: 1px solid #f0f5fc;
+            vertical-align: middle;
+        }
+
+        table tr:hover td {
+            background: #fafcff;
+        }
+
+        .status-badge {
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .status-badge.completed {
+            background: #dce4ed;
+            color: #3d5a78;
+        }
+
+        .status-badge.cancelled {
+            background: #fde8e8;
+            color: #b33c3c;
+        }
+
+        .status-badge.confirmed {
+            background: #e3f0e5;
+            color: #1d6b3c;
+        }
+
+        .status-badge.pending {
+            background: #ffefe3;
+            color: #b45a1c;
+        }
+
+        .status-badge.upcoming {
+            background: #e3f0e5;
+            color: #1d6b3c;
+        }
+
+        .text-muted {
+            color: #7a94af;
+            font-size: 0.85rem;
+        }
+
+        /* pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .pagination .pages {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .pagination .pages a {
+            padding: 0.3rem 0.9rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1e3a5f;
+            border: 1.5px solid transparent;
+            transition: 0.15s;
+        }
+
+        .pagination .pages a:hover {
+            background: #f2f6fe;
+            border-color: #d0dce8;
+        }
+
+        .pagination .pages a.active {
+            background: #1a5cff;
+            color: white;
+            border-color: #1a5cff;
+        }
+
+        /* responsive */
+        @media (max-width: 640px) {
+            .history-container {
+                padding: 1.8rem 1.5rem;
+                border-radius: 32px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-header .title-group h2 {
+                font-size: 1.3rem;
+            }
+
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 24px;
+                padding: 1rem;
+            }
+
+            .filter-bar .search-wrapper {
+                min-width: auto;
+            }
+
+            .filter-bar .filter-group {
+                justify-content: center;
+            }
+
+            table {
+                font-size: 0.8rem;
+            }
+
+            table th,
+            table td {
+                padding: 0.5rem 0.4rem;
+            }
+
+            .pagination {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .history-container {
+                padding: 1.2rem 1rem;
+                border-radius: 24px;
+            }
+
+            .filter-bar .filter-group select {
+                font-size: 0.75rem;
+                padding: 0.3rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="history-container">
+
+        <!-- header -->
+        <div class="page-header">
+            <div class="title-group">
+                <div class="logo-mini" style="margin-bottom:0.3rem;">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="width:30px;height:30px;">
+                        <rect x="4" y="20" width="56" height="28" rx="14" fill="#8BC34A" opacity="0.9" />
+                        <rect x="8" y="24" width="48" height="20" rx="10" fill="#689F38" opacity="0.7" />
+                        <path d="M18 26 L28 20 L38 26 L32 34 L26 34 L18 26Z" fill="#CDDC39" opacity="0.9" />
+                        <path d="M32 20 L38 14 L44 20 L40 26 L34 26 L32 20Z" fill="#FFEB3B" opacity="0.8" />
+                        <circle cx="32" cy="40" r="6" fill="#33691E" opacity="0.6" />
+                        <circle cx="32" cy="40" r="3" fill="#AFB42B" opacity="0.9" />
+                    </svg>
+                    <span>Turfora</span>
+                </div>
+                <h2><i class="fas fa-history"></i> Booking History</h2>
+                <span class="sub">View all your past bookings</span>
+            </div>
+            <a href="{% url 'home' user.id%}" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+
+        <!-- filter bar -->
+        <form method="GET" class="filter-bar">
+
+            <div class="search-wrapper">
+
+                <i class="fas fa-search"></i>
+
+                <input type="text" name="search" value="{{ search }}" placeholder="Search by turf or booking ID...">
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <select name="status">
+
+                    <option value="">All Status</option>
+
+                    <option value="Completed" {% if status == "completed" %}selected{% endif %}>
+                        Completed
+                    </option>
+
+                    <option value="Cancelled" {% if status == "cancelled" %}selected{% endif %}>
+                        Cancelled
+                    </option>
+
+                    <option value="Confirmed" {% if status == "confirmed" %}selected{% endif %}>
+                        Confirmed
+                    </option>
+
+                    <option value="Pending" {% if status == "pending" %}selected{% endif %}>
+                        Pending
+                    </option>
+
+                </select>
+
+
+                <select name="sort">
+
+                    <option value="newest" {% if sort == "newest" %}selected{% endif %}>
+                        Sort by: Newest
+                    </option>
+
+                    <option value="oldest" {% if sort == "oldest" %}selected{% endif %}>
+                        Oldest
+                    </option>
+
+                </select>
+
+
+                <button type="submit" class="btn btn-outline btn-sm">
+
+                    <i class="fas fa-sliders-h"></i>
+                    Filter
+
+                </button>
+
+            </div>
+
+        </form>
+
+        <!-- table -->
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Turf</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for booking in bookings %}
+
+                    <tr>
+
+                        <td>
+                            <strong>#TUR-{{ booking.id }}</strong>
+                        </td>
+
+                        <td>
+                            {{ booking.turf.turf_name }}
+                        </td>
+
+                        <td>
+                            {{ booking.booking_date|date:"M d, Y" }}
+                        </td>
+
+                        <td>
+                            {{ booking.start_time|time:"g:i A" }}
+                            –
+                            {{ booking.end_time|time:"g:i A" }}
+                        </td>
+
+                        <td>
+                            ₹{{ booking.price }}
+                        </td>
+
+                        <td>
+
+                            {% if booking.status == "completed" %}
+
+                            <span class="status-badge completed">
+                                Completed
+                            </span>
+
+                            {% elif booking.status == "cancelled" %}
+
+                            <span class="status-badge cancelled">
+                                Cancelled
+                            </span>
+
+                            {% elif booking.status == "confirmed" %}
+
+                            <span class="status-badge confirmed">
+                                Confirmed
+                            </span>
+
+                            {% elif booking.status == "pending" %}
+
+                            <span class="status-badge pending">
+                                Pending
+                            </span>
+
+                            {% else %}
+
+                            <span class="status-badge upcoming">
+                                {{ booking.status }}
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="6" style="text-align:center; padding:40px;">
+                            No booking history found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- pagination -->
+        <div class="pagination">
+            <span class="text-muted"> Showing {{ bookings|length }} bookings</span>
+            <div class="pages">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

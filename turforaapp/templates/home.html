@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turfora · Home</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f8fe;
+            color: #0b1d2b;
+            padding: 1.5rem;
+        }
+
+        .app {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.08);
+            padding: 2rem 2.5rem;
+        }
+
+        /* header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #edf2f7;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0b1d2b;
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo span {
+            background: linear-gradient(145deg, #0b1d2b, #1a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #eef6ff;
+            color: #1a5cff;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 30px;
+            background: #dce4ed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #1a5cff;
+            background: #e0ebff;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            cursor: pointer;
+        }
+
+        /* grid layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 2rem;
+        }
+
+        /* sidebar */
+        .sidebar {
+            background: #f9fcff;
+            border-radius: 28px;
+            padding: 1.5rem 1rem;
+            border: 1px solid #eef3f8;
+        }
+
+        .sidebar h4 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #7a94af;
+            margin: 1.2rem 0 0.8rem 0.8rem;
+        }
+
+        .sidebar .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem 1rem;
+            border-radius: 14px;
+            color: #1e3a5f;
+            font-weight: 500;
+            transition: 0.15s;
+            cursor: pointer;
+            margin-bottom: 0.2rem;
+            text-decoration: none;
+        }
+
+        .sidebar .menu-item i {
+            width: 22px;
+            color: #5f7d98;
+            font-size: 1.1rem;
+        }
+
+        .sidebar .menu-item.active {
+            background: #e5efff;
+            color: #1a5cff;
+        }
+
+        .sidebar .menu-item.active i {
+            color: #1a5cff;
+        }
+
+        .sidebar .menu-item:hover {
+            background: #edf4fd;
+        }
+
+        /* main content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* search & filter bar */
+        .search-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.8rem 1rem;
+            background: #f9fcff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid #e2eaf2;
+        }
+
+        .search-bar i {
+            color: #7a94af;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.6rem 0;
+            font-size: 1rem;
+            outline: none;
+            min-width: 150px;
+            font-family: inherit;
+        }
+
+        .search-bar input::placeholder {
+            color: #a0b8cf;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group select {
+            background: white;
+            border: 1px solid #dce4ed;
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem 0.5rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1e3a5f;
+            outline: none;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .filter-group .btn-search {
+            background: #1a5cff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .filter-group .btn-search:hover {
+            background: #0f4ad6;
+        }
+
+        /* turf grid - clickable cards (only essential fields) */
+        .turf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .turf-card {
+            background: #ffffff;
+            border-radius: 28px;
+            border: 1px solid #edf2f7;
+            overflow: hidden;
+            transition: 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .turf-card:hover {
+            box-shadow: 0 12px 32px rgba(0, 20, 40, 0.10);
+            transform: translateY(-3px);
+            border-color: #c5d9f0;
+        }
+
+        .turf-card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            background: #dce4ed;
+            display: block;
+        }
+
+        .turf-body {
+            padding: 1rem 1.2rem 1.2rem;
+        }
+
+        .turf-body h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+            color: #0b1d2b;
+        }
+
+        .turf-body .location {
+            color: #5d7388;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .turf-body .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            color: #2c5775;
+            margin: 0.4rem 0;
+        }
+
+        .turf-body .meta i {
+            color: #7a94af;
+            width: 16px;
+        }
+
+        .turf-body .price {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #0b1d2b;
+            margin: 0.3rem 0 0.4rem;
+        }
+
+        .turf-body .rating {
+            color: #f5a623;
+            letter-spacing: 1px;
+        }
+
+        .turf-body .facilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem 0.6rem;
+            margin: 0.5rem 0;
+            font-size: 0.75rem;
+            color: #2c5775;
+        }
+
+        .turf-body .facilities span {
+            background: #f0f5fc;
+            padding: 0.15rem 0.7rem;
+            border-radius: 30px;
+        }
+
+        .turf-body .view-detail {
+            display: inline-block;
+            background: #eef6ff;
+            color: #1a5cff;
+            font-weight: 600;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-top: 0.4rem;
+            transition: 0.15s;
+        }
+
+        .turf-card:hover .view-detail {
+            background: #1a5cff;
+            color: white;
+        }
+
+        /* notifications */
+        .notif-bar {
+            background: #f0f7ff;
+            border-radius: 40px;
+            padding: 0.6rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            border: 1px solid #d6e6ff;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .notif-bar i {
+            color: #1a5cff;
+        }
+
+        .notif-bar .notif-item {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .text-sm {
+            font-size: 0.85rem;
+            color: #4b6a85;
+        }
+
+        /* responsive */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.2rem;
+                padding: 1rem;
+            }
+
+            .sidebar h4 {
+                display: none;
+            }
+
+            .sidebar .menu-item {
+                padding: 0.4rem 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .app {
+                padding: 1rem;
+            }
+
+            .search-bar {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 28px;
+                padding: 1rem;
+            }
+
+            .filter-group {
+                flex-wrap: wrap;
+            }
+
+            .turf-grid {
+                grid-template-columns:  repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    {% csrf_token %}
+    <div class="app">
+
+        <!-- header -->
+        <header class="header">
+            <div class="logo">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;">
+                    <rect x="4" y="20" width="56" height="28" rx="14" fill="#8BC34A" opacity="0.9" />
+                    <rect x="8" y="24" width="48" height="20" rx="10" fill="#689F38" opacity="0.7" />
+                    <path d="M18 26 L28 20 L38 26 L32 34 L26 34 L18 26Z" fill="#CDDC39" opacity="0.9" />
+                    <path d="M32 20 L38 14 L44 20 L40 26 L34 26 L32 20Z" fill="#FFEB3B" opacity="0.8" />
+                    <circle cx="32" cy="40" r="6" fill="#33691E" opacity="0.6" />
+                    <circle cx="32" cy="40" r="3" fill="#AFB42B" opacity="0.9" />
+                </svg>
+                <span>Turfora</span>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'notifications' %}">
+                    <span class="badge"><i class="fas fa-bell"></i> </span></a>
+                
+            </div>
+        </header>
+
+
+
+        <!-- dashboard grid -->
+        <div class="dashboard-grid">
+            <!-- sidebar menu -->
+            <aside class="sidebar">
+                <a href="#" class="menu-item active"><i class="fas fa-home"></i> Home</a>
+                <a href="{% url 'mybookings' user.id%}" class="menu-item"><i class="fas fa-calendar-alt"></i> My Bookings</a>
+                <a href="{% url 'booking_history' user.id%}" class="menu-item"><i class="fas fa-history"></i> Booking History</a>
+                <a href="{% url 'reviews_ratings'%}" class="menu-item"><i class="fas fa-star"></i> Ratings & Reviews</a>
+                <a href="{% url 'userprofile' user.id%}" class="menu-item"><i class="fas fa-user"></i> Profile</a>
+                <a href="#" class="menu-item"><i class="fas fa-credit-card"></i> Payments</a>
+                <h4>account</h4>
+                <a href="{% url 'login'%}" class="menu-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </aside>
+
+            <!-- main content - only turfs -->
+            <div class="main-content">
+
+                <!-- search & filter -->
+                <form method="GET" class="search-bar">
+
+                    <i class="fas fa-search"></i>
+
+                    <input type="text" name="q" placeholder="Search by location or turf name..." value="{{ query }}">
+
+                    <div class="filter-group">
+
+                        <!-- Location -->
+                        <select name="location">
+                            <option value="">All locations</option>
+
+                            <option value="Nagercoil" {% if location == "Nagercoil" %}selected{% endif %}>
+                                Nagercoil
+                            </option>
+
+                            <option value="Marthandam" {% if location == "Marthandam" %}selected{% endif %}>
+                                Marthandam
+                            </option>
+
+
+                        </select>
+
+
+                        <!-- Turf Type -->
+                        <select name="turf_type">
+
+                            <option value="">All types</option>
+
+                            <option value="Football" {% if turf_type == "Football" %}selected{% endif %}>
+                                Football
+                            </option>
+
+                            <option value="Cricket" {% if turf_type == "Cricket" %}selected{% endif %}>
+                                Cricket
+                            </option>
+
+                            <option value="Multipurpose" {% if turf_type == "Multipurpose" %}selected{% endif %}>
+                                Multipurpose
+                            </option>
+
+                        </select>
+
+
+                        <!-- Price -->
+                        <select name="price">
+
+                            <option value="">Price: any</option>
+
+                            <option value="low" {% if price == "low" %}selected{% endif %}>
+                                Below ₹500
+                            </option>
+
+                            <option value="medium" {% if price == "medium" %}selected{% endif %}>
+                                ₹500 - ₹1000
+                            </option>
+
+                            <option value="high" {% if price == "high" %}selected{% endif %}>
+                                Above ₹1000
+                            </option>
+
+                        </select>
+
+
+                        <!-- Availability -->
+                        <select name="availability">
+
+                            <option value="">All</option>
+
+                            <option value="active" {% if availability == "active" %}selected{% endif %}>
+                                Available
+                            </option>
+
+                            <option value="inactive" {% if availability == "inactive" %}selected{% endif %}>
+                                Not Available
+                            </option>
+
+                            <option value="maintenance" {% if availability == "maintenance" %}selected{% endif %}>
+                                Maintenance
+                            </option>
+
+                        </select>
+
+
+                        <button type="submit" class="btn-search">
+                            <i class="fas fa-sliders-h"></i>
+                            Filter
+                        </button>
+
+                    </div>
+
+                </form>
+                <!-- turf grid - clickable cards (only essential fields) -->
+                <div class="turf-grid">
+
+
+                    {% for turf in turfs %}
+
+                    <div class="turf-card">
+
+                        {% if turf.image %}
+                        <img src="{{ turf.image.url }}" alt="{{ turf.turf_name }}">
+                        {% else %}
+                        <img src="https://via.placeholder.com/400x200?text=No+Image" alt="No image">
+                        {% endif %}
+
+                        <div class="turf-body">
+
+                            <h3>{{ turf.turf_name }}</h3>
+
+                            <div class="location">
+                                <i class="fas fa-map-pin"></i>
+                                {{ turf.location }}
+                            </div>
+
+                            <div class="meta">
+
+                                <span>
+                                    <i class="fas fa-futbol"></i>
+                                    {{ turf.turf_type }}
+                                </span>
+
+                            </div>
+
+                            <div class="price">
+
+                                ₹{{ turf.price_per_hour }}
+
+                                <span style="font-weight:400;
+                             font-size:0.8rem;
+                             color:#5d7388;">
+                                    /hour
+                                </span>
+
+                            </div>
+
+                            <div class="facilities">
+
+                                {% if turf.available_facilities %}
+
+                                {% for facility in turf.available_facilities.split %}
+                                <span>{{ facility }}</span>
+                                {% endfor %}
+
+                                {% endif %}
+
+                            </div>
+
+                            <a href="{% url 'turfdetails' turf.id %}" class="view-detail">
+                                <i class="fas fa-arrow-right"></i>
+                                View details
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    {% empty %}
+
+                    <div style="padding:30px; text-align:center; width:100%;">
+                        <i class="fas fa-search" style="font-size:40px; color:#9bb0c5;"></i>
+
+                        <h3 style="margin-top:15px;">
+                            No turfs found
+                        </h3>
+
+                        <p style="color:#7a94af;">
+                            Try another location, turf type or price range.
+                        </p>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+            </div>
+
+
+
+        </div> <!-- main-content -->
+    </div> <!-- dashboard-grid -->
+    </div> <!-- app -->
+</body>
+
+</html>

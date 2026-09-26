@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turfora · User Details</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f5fc;
+            color: #0b1d2b;
+            padding: 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .details-container {
+            max-width: 600px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 48px;
+            box-shadow: 0 30px 60px -20px rgba(0, 20, 30, 0.25), 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            padding: 3rem 3.5rem;
+            transition: all 0.2s ease;
+        }
+
+        /* header */
+        .details-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1.8rem;
+            border-bottom: 1px solid #edf2f7;
+            margin-bottom: 2rem;
+        }
+
+        .details-header .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #5d7388;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.15s;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            background: #f0f5fc;
+            font-size: 0.9rem;
+        }
+
+        .details-header .back-btn:hover {
+            background: #e5edf5;
+            color: #1a5cff;
+        }
+
+        .details-header .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: #e0ebff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a5cff;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            flex-shrink: 0;
+        }
+
+        .details-header .title-group h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0b1d2b;
+        }
+
+        .details-header .title-group .sub {
+            color: #5d7388;
+            font-size: 0.9rem;
+        }
+
+        /* logo mini */
+        .logo-mini {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0b1d2b;
+        }
+
+        .logo-mini svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .logo-mini span {
+            background: linear-gradient(145deg, #0b1d2b, #1a5cff);
+             
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* user details */
+        .user-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            background: #f9fcff;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            border: 1px solid #eef3f8;
+            transition: 0.15s;
+        }
+
+        .detail-item:hover {
+            border-color: #d6e6ff;
+            background: #fafcff;
+        }
+
+        .detail-item .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: #eef6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a5cff;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .detail-item .info {
+            flex: 1;
+        }
+
+        .detail-item .info .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #5d7388;
+            font-weight: 600;
+        }
+
+        .detail-item .info .value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0b1d2b;
+            margin-top: 0.1rem;
+        }
+
+        .detail-item .info .value .badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+        }
+
+        .badge.active {
+            background: #e3f0e5;
+            color: #1d6b3c;
+        }
+
+        .badge.blocked {
+            background: #fde8e8;
+            color: #b33c3c;
+        }
+
+        /* actions */
+        .actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.8rem;
+            padding-top: 1.8rem;
+            border-top: 1px solid #edf2f7;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.7rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #1a5cff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f4ad6;
+            transform: scale(1.02);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1e3a5f;
+            border: 1.5px solid #d0dce8;
+        }
+
+        .btn-outline:hover {
+            background: #f2f6fe;
+        }
+
+        .btn-warning {
+            background: #f5a623;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d4911e;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #e54c4c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c9302c;
+        }
+
+        /* responsive */
+        @media (max-width: 640px) {
+            .details-container {
+                padding: 1.8rem 1.5rem;
+                border-radius: 32px;
+            }
+
+            .details-header {
+                flex-wrap: wrap;
+            }
+
+            .details-header .title-group h2 {
+                font-size: 1.3rem;
+            }
+
+            .logo-mini {
+                margin-left: 0;
+            }
+
+            .detail-item {
+                padding: 0.8rem 1rem;
+                flex-wrap: wrap;
+            }
+
+            .detail-item .icon {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+
+            .detail-item .info .value {
+                font-size: 1rem;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                justify-content: center;
+                padding: 0.7rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .details-container {
+                padding: 1.2rem 1rem;
+                border-radius: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="details-container">
+
+        <!-- header -->
+        <div class="details-header">
+            <a href="{% url 'manageusers'%}" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="avatar">JD</div>
+            <div class="title-group">
+                <h2>User Details</h2>
+                <span class="sub">View user information</span>
+            </div>
+            <div class="logo-mini">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:30px;height:30px;">
+                    <rect x="4" y="20" width="56" height="28" rx="14" fill="#8BC34A" opacity="0.9" />
+                    <rect x="8" y="24" width="48" height="20" rx="10" fill="#689F38" opacity="0.7" />
+                    <path d="M18 26 L28 20 L38 26 L32 34 L26 34 L18 26Z" fill="#CDDC39" opacity="0.9" />
+                    <path d="M32 20 L38 14 L44 20 L40 26 L34 26 L32 20Z" fill="#FFEB3B" opacity="0.8" />
+                    <circle cx="32" cy="40" r="6" fill="#33691E" opacity="0.6" />
+                    <circle cx="32" cy="40" r="3" fill="#AFB42B" opacity="0.9" />
+                </svg>
+                <span>Turfora</span>
+            </div>
+        </div>
+
+        <!-- user details -->
+        <div class="user-details">
+            <!-- Username -->
+            <div class="detail-item">
+                <div class="icon"><i class="fas fa-user"></i></div>
+                <div class="info">
+                    <div class="label">Username</div>
+                    <div class="value">{{user.username}}</div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="detail-item">
+                <div class="icon"><i class="fas fa-envelope"></i></div>
+                <div class="info">
+                    <div class="label">Email</div>
+                    <div class="value">{{user.email}}</div>
+                </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="detail-item">
+                <div class="icon"><i class="fas fa-phone"></i></div>
+                <div class="info">
+                    <div class="label">Phone</div>
+                    <div class="value">{{user.phone}}</div>
+                </div>
+            </div>
+
+            <!-- Status (optional extra detail) -->
+            <div class="detail-item">
+                <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="info">
+                    <div class="label">Status</div>
+                    <div class="value">
+                        Active
+                        <span class="badge active">Verified</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+</body>
+
+</html>

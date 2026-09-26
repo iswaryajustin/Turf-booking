@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turfora · Turf Details</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f5fc;
+            color: #0b1d2b;
+            padding: 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .details-container {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 48px;
+            box-shadow: 0 30px 60px -20px rgba(0, 20, 30, 0.25), 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem 3rem;
+            transition: all 0.2s ease;
+        }
+
+        /* header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #edf2f7;
+            margin-bottom: 2rem;
+        }
+
+        .page-header .title-group h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0b1d2b;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .page-header .title-group h2 i {
+            color: #1a5cff;
+        }
+
+        .page-header .title-group .sub {
+            color: #5d7388;
+            font-size: 0.9rem;
+        }
+
+        .page-header .actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        /* logo mini */
+        .logo-mini {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0b1d2b;
+        }
+
+        .logo-mini svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .logo-mini span {
+            background: linear-gradient(145deg, #0b1d2b, #1a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* buttons */
+        .btn {
+            padding: 0.5rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #1a5cff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f4ad6;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1e3a5f;
+            border: 1.5px solid #d0dce8;
+        }
+
+        .btn-outline:hover {
+            background: #f2f6fe;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #e54c4c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c9302c;
+        }
+
+        /* Turf Images */
+        .turf-images {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .turf-images .main-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 20px;
+            background: #dce4ed;
+        }
+
+        .turf-images .thumbnail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .turf-images .thumbnail-grid img {
+            width: 100%;
+            height: 152px;
+            object-fit: cover;
+            border-radius: 16px;
+            background: #dce4ed;
+        }
+
+        /* details grid */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f0f5fc;
+        }
+
+        .detail-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .detail-item .label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #5d7388;
+        }
+
+        .detail-item .value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #0b1d2b;
+        }
+
+        .detail-item .value .status-badge {
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .status-badge.active {
+            background: #e3f0e5;
+            color: #1d6b3c;
+        }
+
+        .status-badge.inactive {
+            background: #fde8e8;
+            color: #c53030;
+        }
+
+        .status-badge.maintenance {
+            background: #fff4db;
+            color: #b7791f;
+        }
+
+        /* facilities */
+        .facilities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 0.8rem;
+            margin-top: 0.2rem;
+        }
+
+        .facilities-list span {
+            background: #f0f5fc;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #2c5775;
+        }
+
+        /* time slots */
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.6rem;
+            margin-top: 0.3rem;
+        }
+
+        .time-slot {
+            padding: 0.5rem 1rem;
+            border-radius: 16px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1.5px solid #e2eaf2;
+            background: #fafcff;
+        }
+
+        .time-slot.available {
+            border-color: #8bc34a;
+            background: #f4faf0;
+            color: #1d6b3c;
+        }
+
+        .time-slot.booked {
+            border-color: #f5a623;
+            background: #fff7ed;
+            color: #b45a1c;
+        }
+
+        .time-slot .slot-status {
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 0.1rem;
+        }
+
+        /* rules */
+        .rules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-top: 0.3rem;
+        }
+
+        .rules-list .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            color: #2c5775;
+        }
+
+        .rules-list .rule-item i {
+            color: #1a5cff;
+            margin-top: 0.15rem;
+            font-size: 0.8rem;
+        }
+
+        /* actions */
+        .details-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            padding-top: 1.8rem;
+            border-top: 1px solid #edf2f7;
+        }
+
+        /* responsive */
+        @media (max-width: 768px) {
+            .details-container {
+                padding: 1.5rem 1.2rem;
+                border-radius: 32px;
+            }
+
+            .turf-images {
+                grid-template-columns: 1fr;
+            }
+
+            .turf-images .main-image {
+                height: 220px;
+            }
+
+            .turf-images .thumbnail-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .turf-images .thumbnail-grid img {
+                height: 100px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .detail-item.full-width {
+                grid-column: 1;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .details-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+
+            .time-slots {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        @media (max-width: 420px) {
+            .details-container {
+                padding: 1rem;
+                border-radius: 24px;
+            }
+
+            .turf-images .thumbnail-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .turf-images .thumbnail-grid img {
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="details-container">
+
+        <!-- header -->
+        <div class="page-header">
+            <div class="title-group">
+                <div class="logo-mini" style="margin-bottom:0.3rem;">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="width:30px;height:30px;">
+                        <rect x="4" y="20" width="56" height="28" rx="14" fill="#8BC34A" opacity="0.9" />
+                        <rect x="8" y="24" width="48" height="20" rx="10" fill="#689F38" opacity="0.7" />
+                        <path d="M18 26 L28 20 L38 26 L32 34 L26 34 L18 26Z" fill="#CDDC39" opacity="0.9" />
+                        <path d="M32 20 L38 14 L44 20 L40 26 L34 26 L32 20Z" fill="#FFEB3B" opacity="0.8" />
+                        <circle cx="32" cy="40" r="6" fill="#33691E" opacity="0.6" />
+                        <circle cx="32" cy="40" r="3" fill="#AFB42B" opacity="0.9" />
+                    </svg>
+                    <span>Turfora</span>
+                </div>
+                <h2><i class="fas fa-info-circle"></i> Turf Details</h2>
+                <span class="sub">View complete turf information</span>
+            </div>
+            
+        </div>
+
+        <!-- Turf Images -->
+        <div class="turf-images">
+            {% if turf.image %}
+            <img class="main-image" src="{{ turf.image.url }}" alt="{{ turf.turf_name }}">
+            {% else %}
+            <img class="main-image" src="https://via.placeholder.com/600x400?text=No+Image" alt="No image">
+            {% endif %}
+        </div>
+
+        <!-- Details Grid -->
+        <div class="details-grid">
+
+            <!-- Name -->
+            <div class="detail-item">
+                <span class="label"><i class="fas fa-font"></i> Name</span>
+                <span class="value">{{ turf.turf_name }}</span>
+            </div>
+
+            <!-- Location -->
+            <div class="detail-item">
+                <span class="label"><i class="fas fa-map-pin"></i> Location</span>
+                <span class="value">{{ turf.location }}, {{ turf.address }}</span>
+            </div>
+
+            <!-- Price / Hour -->
+            <div class="detail-item">
+                <span class="label"><i class="fas fa-tag"></i> Price / Hour</span>
+                <span class="value">₹{{ turf.price_per_hour }}</span>
+            </div>
+
+            <!-- Status -->
+            <div class="detail-item">
+                <span class="label"><i class="fas fa-toggle-on"></i> Status</span>
+                <span class="value">
+                    {% if turf.is_active %}
+                    <span class="status-badge active">Active</span>
+                    {% else %}
+                    <span class="status-badge inactive">Inactive</span>
+                    {% endif %}
+                </span>
+            </div>
+
+            <!-- Opening Time -->
+            <div class="detail-item">
+                <span class="label"><i class="fas fa-clock"></i> Opening Time</span>
+                <span class="value">{{ turf.opening_time|time:"g:i A" }}</span>
+            </div>
+
+            <!-- Closing Time -->
+            <div class="detail-item">
+                <span class="label"><i class="fas fa-clock"></i> Closing Time</span>
+                <span class="value">{{ turf.closing_time|time:"g:i A" }}</span>
+            </div>
+
+            <!-- Description (full width) -->
+            <div class="detail-item full-width">
+                <span class="label"><i class="fas fa-align-left"></i> Description</span>
+                <span class="value">{{ turf.description }}</span>
+            </div>
+
+            <!-- Available Facilities (full width) -->
+            <div class="detail-item full-width">
+                <span class="label"><i class="fas fa-check-circle"></i> Available Facilities</span>
+
+                <div class="facilities-list">
+                {% for facility in turf.available_facilities.split %}
+                <span>{{ facility }}</span>
+                {% endfor %}
+                </div>
+            </div>
+
+          
+
+            <!-- Rules & Regulations (full width) -->
+            <div class="detail-item full-width" style="border-bottom:none;">
+                <span class="label"><i class="fas fa-gavel"></i> Rules & Regulations</span>
+                <div class="rules-list">
+                    <div class="rule-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>No smoking or alcohol consumption inside the turf premises.</span>
+                    </div>
+                    <div class="rule-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Proper sports shoes are mandatory. No black-soled shoes allowed.</span>
+                    </div>
+                    <div class="rule-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Booking cancellation must be made at least 24 hours in advance.</span>
+                    </div>
+                    <div class="rule-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Please arrive 15 minutes before your scheduled time.</span>
+                    </div>
+                    <div class="rule-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Report any injuries to the staff immediately.</span>
+                    </div>
+                    <div class="rule-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Maintain cleanliness and use designated trash bins.</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- actions -->
+        <div class="details-actions">
+            <a href="{% url 'booknow' user.id turf.id %}" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Now</a>
+            <a href="{% url 'home' user.id %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+            
+        </div>
+
+    </div>
+
+</body>
+
+</html>

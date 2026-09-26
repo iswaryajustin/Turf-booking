@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turfora · Rate & Review</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f5fc;
+            color: #0b1d2b;
+            padding: 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .review-container {
+            max-width: 820px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 48px;
+            box-shadow: 0 30px 60px -20px rgba(0, 20, 30, 0.25), 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            padding: 3rem 3.5rem;
+            transition: all 0.2s ease;
+        }
+
+        /* header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #edf2f7;
+            margin-bottom: 2rem;
+        }
+
+        .page-header .title-group h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0b1d2b;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .page-header .title-group h2 i {
+            color: #f5a623;
+        }
+
+        .page-header .title-group .sub {
+            color: #5d7388;
+            font-size: 0.9rem;
+        }
+
+        .page-header .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #5d7388;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.15s;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            background: #f0f5fc;
+            font-size: 0.9rem;
+        }
+
+        .page-header .back-btn:hover {
+            background: #e5edf5;
+            color: #1a5cff;
+        }
+
+        /* logo mini */
+        .logo-mini {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0b1d2b;
+        }
+
+        .logo-mini svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .logo-mini span {
+            background: linear-gradient(145deg, #0b1d2b, #1a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* info box */
+        .info-box {
+            background: #eef6ff;
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid #d6e6ff;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .info-box i {
+            color: #1a5cff;
+            font-size: 1.2rem;
+        }
+
+        .info-box p {
+            color: #1e3a5f;
+            font-size: 0.95rem;
+        }
+
+        /* booking cards */
+        .booking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .booking-card {
+            background: #fafcff;
+            border-radius: 24px;
+            border: 1px solid #eef3f8;
+            padding: 1.5rem 1.8rem;
+            transition: 0.15s;
+        }
+
+        .booking-card:hover {
+            border-color: #d6e6ff;
+            background: #f8fbff;
+        }
+
+        .booking-card .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-card .booking-header .turf-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0b1d2b;
+        }
+
+        .booking-card .booking-header .status-badge {
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .status-badge.completed {
+            background: #dce4ed;
+            color: #3d5a78;
+        }
+
+        .status-badge.pending {
+            background: #ffefe3;
+            color: #b45a1c;
+        }
+
+        .booking-card .booking-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 1.8rem;
+            font-size: 0.9rem;
+            color: #5d7388;
+            margin-bottom: 0.8rem;
+        }
+
+        .booking-card .booking-details i {
+            color: #7a94af;
+            width: 16px;
+        }
+
+        /* review form */
+        .review-form {
+            border-top: 1px solid #edf2f7;
+            padding-top: 1.2rem;
+            margin-top: 0.3rem;
+        }
+
+        .review-form .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .review-form .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e3a5f;
+            margin-bottom: 0.3rem;
+        }
+
+        .review-form .form-group label .required {
+            color: #e54c4c;
+        }
+
+        .review-form .form-group .stars-display {
+            color: #f5a623;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+        }
+
+        .review-form .form-group .stars-display .star-empty {
+            color: #dce4ed;
+        }
+
+        .review-form .form-group .rating-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0b1d2b;
+            margin-left: 0.5rem;
+        }
+
+        .review-form .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 16px;
+            border: 1.5px solid #e2eaf2;
+            background: #ffffff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: 0.15s;
+            outline: none;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .review-form .form-group textarea:focus {
+            border-color: #1a5cff;
+            box-shadow: 0 4px 14px rgba(26, 92, 255, 0.08);
+        }
+
+        .review-form .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 16px;
+            border: 1.5px solid #e2eaf2;
+            background: #ffffff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .review-form .form-group select:focus {
+            border-color: #1a5cff;
+            box-shadow: 0 4px 14px rgba(26, 92, 255, 0.08);
+        }
+
+        .review-form .form-actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.5rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #1a5cff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f4ad6;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1e3a5f;
+            border: 1.5px solid #d0dce8;
+        }
+
+        .btn-outline:hover {
+            background: #f2f6fe;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-sm {
+            padding: 0.3rem 1.2rem;
+            font-size: 0.8rem;
+        }
+
+        .btn-review {
+            background: #f5a623;
+            color: white;
+        }
+
+        .btn-review:hover {
+            background: #d4911e;
+        }
+
+        .text-muted {
+            color: #7a94af;
+            font-size: 0.85rem;
+        }
+
+        /* already reviewed */
+        .already-reviewed {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #28a745;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .already-reviewed i {
+            font-size: 1.1rem;
+        }
+
+        /* responsive */
+        @media (max-width: 640px) {
+            .review-container {
+                padding: 1.8rem 1.5rem;
+                border-radius: 32px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-header .title-group h2 {
+                font-size: 1.3rem;
+            }
+
+            .booking-card {
+                padding: 1.2rem 1rem;
+            }
+
+            .booking-card .booking-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .review-form .form-group .stars-display {
+                font-size: 1.5rem;
+            }
+
+            .review-form .form-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .review-container {
+                padding: 1.2rem 1rem;
+                border-radius: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="review-container">
+
+        <!-- header -->
+        <div class="page-header">
+            <div class="title-group">
+                <div class="logo-mini" style="margin-bottom:0.3rem;">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="width:30px;height:30px;">
+                        <rect x="4" y="20" width="56" height="28" rx="14" fill="#8BC34A" opacity="0.9" />
+                        <rect x="8" y="24" width="48" height="20" rx="10" fill="#689F38" opacity="0.7" />
+                        <path d="M18 26 L28 20 L38 26 L32 34 L26 34 L18 26Z" fill="#CDDC39" opacity="0.9" />
+                        <path d="M32 20 L38 14 L44 20 L40 26 L34 26 L32 20Z" fill="#FFEB3B" opacity="0.8" />
+                        <circle cx="32" cy="40" r="6" fill="#33691E" opacity="0.6" />
+                        <circle cx="32" cy="40" r="3" fill="#AFB42B" opacity="0.9" />
+                    </svg>
+                    <span>Turfora</span>
+                </div>
+                <h2><i class="fas fa-star"></i> Rate & Review</h2>
+                <span class="sub">Share your experience after each booking</span>
+            </div>
+            <a href="{% url 'home' user.id%}" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+
+        <!-- info box -->
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i>
+            <p>Rate and review the turfs you've played at. Your feedback helps other players make better choices!</p>
+        </div>
+
+        <!-- booking list -->
+        <div class="booking-list">
+
+            {% for booking in bookings %}
+
+            {% if booking.booking_date < today or booking.status == "completed" %} <div class="booking-card">
+
+                <!-- Booking Header -->
+                <div class="booking-header">
+
+                    <span class="turf-name">
+                        {{ booking.turf.turf_name }}
+                    </span>
+
+                    <span class="status-badge completed">
+                        Completed
+                    </span>
+
+                </div>
+
+
+                <!-- Booking Details -->
+                <div class="booking-details">
+
+                    <span>
+                        <i class="fas fa-calendar-day"></i>
+
+                        {{ booking.booking_date|date:"F d, Y" }}
+                    </span>
+
+                    <span>
+                        <i class="fas fa-clock"></i>
+
+                        {{ booking.start_time|time:"g:i A" }}
+                        –
+                        {{ booking.end_time|time:"g:i A" }}
+                    </span>
+
+                    <span>
+                        <i class="fas fa-map-pin"></i>
+
+                        {{ booking.turf.location }}
+                    </span>
+
+                    <span>
+                        <i class="fas fa-tag"></i>
+
+                        ₹{{ booking.price }}
+                    </span>
+
+                </div>
+
+
+                {% if booking.review_obj %}
+
+                <!-- Already Reviewed -->
+
+                <div style="
+                    display:flex;
+                    gap:0.8rem;
+                    flex-wrap:wrap;
+                    margin-top:0.2rem;
+                ">
+
+                    <span class="already-reviewed">
+
+                        <i class="fas fa-check-circle"></i>
+
+                        Reviewed
+
+                    </span>
+
+
+                    <span class="text-muted" style="
+                            display:flex;
+                            align-items:center;
+                            gap:0.3rem;
+                        ">
+
+                        <span style="color:#f5a623;">
+
+                            {% if booking.review_obj.rating >= 1 %}★{% endif %}
+                            {% if booking.review_obj.rating >= 2 %}★{% endif %}
+                            {% if booking.review_obj.rating >= 3 %}★{% endif %}
+                            {% if booking.review_obj.rating >= 4 %}★{% endif %}
+                            {% if booking.review_obj.rating >= 5 %}★{% endif %}
+
+                        </span>
+
+                        {{ booking.review_obj.rating }}
+
+                    </span>
+
+
+                    <span class="text-muted">
+
+                        <i class="far fa-calendar-alt"></i>
+
+                        {{ booking.review_obj.created_at|date:"M d, Y" }}
+
+                    </span>
+
+                </div>
+
+
+                {% else %}
+
+                <!-- Review Pending -->
+
+                <div style="
+                    display:flex;
+                    gap:0.8rem;
+                    flex-wrap:wrap;
+                    margin-top:0.2rem;
+                ">
+
+                    <span class="text-muted">
+
+                        <i class="far fa-clock"></i>
+
+                        Review pending
+
+                    </span>
+
+                </div>
+
+
+                <!-- Review Form -->
+
+                <div class="review-form">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+
+                        <!-- Booking ID -->
+
+                        <input type="hidden" name="booking_id" value="{{ booking.id }}">
+
+
+                        <!-- Rating -->
+
+                        <div class="form-group">
+
+                            <label>
+                                Your Rating
+                                <span class="required">*</span>
+                            </label>
+
+
+                            <div style="
+                                display:flex;
+                                align-items:center;
+                                gap:0.5rem;
+                                flex-wrap:wrap;
+                            ">
+
+                                <div class="stars-display">
+
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span class="star-empty">★</span>
+
+                                </div>
+
+                                <span class="rating-value">
+                                    4.0
+                                </span>
+
+                            </div>
+
+
+                            <div style="
+                                margin-top:0.3rem;
+                                display:flex;
+                                gap:0.5rem;
+                                flex-wrap:wrap;
+                            ">
+
+                                <label style="
+                                        display:inline-flex;
+                                        align-items:center;
+                                        gap:0.3rem;
+                                        font-weight:400;
+                                        font-size:0.85rem;
+                                        cursor:pointer;
+                                    ">
+                                    <input type="radio" name="rating" value="1">
+                                    1
+                                </label>
+
+
+                                <label style="
+                                        display:inline-flex;
+                                        align-items:center;
+                                        gap:0.3rem;
+                                        font-weight:400;
+                                        font-size:0.85rem;
+                                        cursor:pointer;
+                                    ">
+                                    <input type="radio" name="rating" value="2">
+                                    2
+                                </label>
+
+
+                                <label style="
+                                        display:inline-flex;
+                                        align-items:center;
+                                        gap:0.3rem;
+                                        font-weight:400;
+                                        font-size:0.85rem;
+                                        cursor:pointer;
+                                    ">
+                                    <input type="radio" name="rating" value="3">
+                                    3
+                                </label>
+
+
+                                <label style="
+                                        display:inline-flex;
+                                        align-items:center;
+                                        gap:0.3rem;
+                                        font-weight:400;
+                                        font-size:0.85rem;
+                                        cursor:pointer;
+                                    ">
+                                    <input type="radio" name="rating" value="4" checked>
+                                    4
+                                </label>
+
+
+                                <label style="
+                                        display:inline-flex;
+                                        align-items:center;
+                                        gap:0.3rem;
+                                        font-weight:400;
+                                        font-size:0.85rem;
+                                        cursor:pointer;
+                                    ">
+                                    <input type="radio" name="rating" value="5">
+                                    5
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Review Text -->
+
+                        <div class="form-group">
+
+                            <label>
+
+                                Your Review
+
+                                <span class="required">*</span>
+
+                            </label>
+
+
+                            <textarea name="review"
+                                placeholder="Share your experience at {{ booking.turf.turf_name }}..."
+                                required></textarea>
+
+                        </div>
+
+
+                        <!-- Buttons -->
+
+                        <div class="form-actions">
+
+                            <button type="submit" class="btn btn-primary">
+
+                                <i class="fas fa-paper-plane"></i>
+
+                                Submit Review
+
+                            </button>
+
+
+                            <a href="{% url 'home' booking.player.id %}" class="btn btn-outline btn-sm">
+
+                                <i class="fas fa-times"></i>
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                {% endif %}
+
+        </div>
+
+        {% endif %}
+
+        {% empty %}
+
+        <!-- No bookings -->
+
+        <div style="
+            padding:40px;
+            text-align:center;
+            width:100%;
+        ">
+
+            <i class="fas fa-star" style="
+                    font-size:45px;
+                    color:#9bb0c5;
+                "></i>
+
+
+            <h3 style="margin-top:15px;">
+
+                No completed bookings
+
+            </h3>
+
+
+            <p style="color:#7a94af; margin-top:8px;">
+
+                Complete a turf booking to leave a rating and review.
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    </div>
+
+</body>
+
+</html>

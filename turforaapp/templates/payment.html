@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Turfora - Payment</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f5fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .payment-box {
+            background: white;
+            width: 450px;
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            color: #0b1d2b;
+        }
+
+        .details {
+            margin: 25px 0;
+            line-height: 2;
+        }
+
+        .amount {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a5cff;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 30px;
+            background: #1a5cff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0f4ad6;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="payment-box">
+
+        <h1>💳 Make Payment</h1>
+
+        <div class="details">
+
+            <p>
+                <strong>Booking ID:</strong>
+                #TUR-{{ booking.id }}
+            </p>
+
+            <p>
+                <strong>Turf:</strong>
+                {{ booking.turf.turf_name }}
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                {{ booking.booking_date|date:"M d, Y" }}
+            </p>
+
+            <p>
+                <strong>Time:</strong>
+                {{ booking.start_time|time:"g:i A" }}
+                -
+                {{ booking.end_time|time:"g:i A" }}
+            </p>
+
+            <p>
+                <strong>Amount:</strong>
+            </p>
+
+            <div class="amount">
+                ₹{{ payment.amount }}
+            </div>
+
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <button type="submit">
+                Pay ₹{{ payment.amount }}
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

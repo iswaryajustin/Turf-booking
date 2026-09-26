@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turfora · Turf Details</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f5fc;
+            color: #0b1d2b;
+            padding: 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .details-container {
+            max-width: 820px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 48px;
+            box-shadow: 0 30px 60px -20px rgba(0, 20, 30, 0.25), 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            padding: 3rem 3.5rem;
+            transition: all 0.2s ease;
+        }
+
+        /* header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-bottom: 1.8rem;
+            border-bottom: 1px solid #edf2f7;
+            margin-bottom: 2rem;
+        }
+
+        .page-header .title-group h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0b1d2b;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .page-header .title-group h2 i {
+            color: #1a5cff;
+        }
+
+        .page-header .title-group .sub {
+            color: #5d7388;
+            font-size: 0.9rem;
+        }
+
+        .page-header .actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        /* logo mini */
+        .logo-mini {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0b1d2b;
+        }
+
+        .logo-mini svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .logo-mini span {
+            background: linear-gradient(145deg, #0b1d2b, #1a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* buttons */
+        .btn {
+            padding: 0.5rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #1a5cff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f4ad6;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1e3a5f;
+            border: 1.5px solid #d0dce8;
+        }
+
+        .btn-outline:hover {
+            background: #f2f6fe;
+        }
+
+        .btn-danger {
+            background: #e54c4c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c9302c;
+        }
+
+        /* details card */
+        .details-card {
+            background: #ffffff;
+            border-radius: 28px;
+            border: 1px solid #edf2f7;
+            padding: 0.5rem 0;
+        }
+
+        .details-card .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .details-card .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f0f5fc;
+            border-right: 1px solid #f0f5fc;
+        }
+
+        .details-card .detail-item:nth-child(even) {
+            border-right: none;
+        }
+
+        .details-card .detail-item.full-width {
+            grid-column: 1 / -1;
+            border-right: none;
+        }
+
+        .details-card .detail-item .label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #5d7388;
+        }
+
+        .details-card .detail-item .value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #0b1d2b;
+        }
+
+        .details-card .detail-item .value .status-badge {
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .status-badge.active {
+            background: #e3f0e5;
+            color: #1d6b3c;
+        }
+
+        /* facilities */
+        .facilities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 0.8rem;
+            margin-top: 0.2rem;
+        }
+
+        .facilities-list span {
+            background: #f0f5fc;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #2c5775;
+        }
+
+        /* images */
+        .images-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .images-grid img {
+            width: 150px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 1px solid #edf2f7;
+        }
+
+        /* actions at bottom */
+        .details-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            padding-top: 1.8rem;
+            border-top: 1px solid #edf2f7;
+        }
+
+        /* responsive */
+        @media (max-width: 640px) {
+            .details-container {
+                padding: 1.5rem 1.2rem;
+                border-radius: 32px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .details-card .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .details-card .detail-item {
+                border-right: none;
+            }
+
+            .details-card .detail-item:nth-child(even) {
+                border-right: none;
+            }
+
+            .details-card .detail-item.full-width {
+                grid-column: 1;
+            }
+
+            .images-grid img {
+                width: 100%;
+                height: 150px;
+            }
+
+            .details-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .details-container {
+                padding: 1rem;
+                border-radius: 24px;
+            }
+        }
+
+        .status-badge.inactive {
+            background: #fde8e8;
+            color: #c53030;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="details-container">
+
+        <!-- header -->
+        <div class="page-header">
+            <div class="title-group">
+                <div class="logo-mini" style="margin-bottom:0.3rem;">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="width:30px;height:30px;">
+                        <rect x="4" y="20" width="56" height="28" rx="14" fill="#8BC34A" opacity="0.9" />
+                        <rect x="8" y="24" width="48" height="20" rx="10" fill="#689F38" opacity="0.7" />
+                        <path d="M18 26 L28 20 L38 26 L32 34 L26 34 L18 26Z" fill="#CDDC39" opacity="0.9" />
+                        <path d="M32 20 L38 14 L44 20 L40 26 L34 26 L32 20Z" fill="#FFEB3B" opacity="0.8" />
+                        <circle cx="32" cy="40" r="6" fill="#33691E" opacity="0.6" />
+                        <circle cx="32" cy="40" r="3" fill="#AFB42B" opacity="0.9" />
+                    </svg>
+                    <span>Turfora</span>
+                </div>
+                <h2><i class="fas fa-info-circle"></i> Turf Details</h2>
+                <span class="sub">View complete turf information</span>
+            </div>
+            <div class="actions">
+                <a href="{% url 'manageturfs' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Manage Turfs</a>
+            </div>
+        </div>
+
+        <!-- details card -->
+        <div class="details-card">
+
+            <div class="detail-grid">
+
+                <!-- Turf Name -->
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-font"></i> Turf Name</span>
+                    <span class="value">{{ turf.turf_name }}</span>
+                </div>
+
+                <!-- Location -->
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-map-pin"></i> Location</span>
+                    <span class="value">{{ turf.location }}</span>
+                </div>
+
+                <!-- Address -->
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-address-card"></i> Address</span>
+                    <span class="value">{{ turf.address }}</span>
+                </div>
+
+                <!-- Turf Type -->
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-futbol"></i> Turf Type</span>
+                    <span class="value">{{ turf.turf_type }}</span>
+                </div>
+
+                <!-- Price -->
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-tag"></i> Price / Hour</span>
+                    <span class="value">₹{{ turf.price_per_hour }}</span>
+                </div>
+
+                <!-- Status -->
+                <div class="detail-item">
+                    <span class="label">
+                        <i class="fas fa-toggle-on"></i> Status
+                    </span>
+
+                    <span class="value">
+                        {% if turf.is_active %}
+                        <span class="status-badge active">Active</span>
+                        {% else %}
+                        <span class="status-badge inactive">Inactive</span>
+                        {% endif %}
+                    </span>
+                </div>
+
+                <!-- Opening Time -->
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-clock"></i> Opening Time</span>
+                    <span class="value">{{ turf.opening_time|time:"h:i A" }}</span>
+                </div>
+
+                <!-- Closing Time -->
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-clock"></i> Closing Time</span>
+                    <span class="value">{{ turf.closing_time|time:"h:i A" }}</span>
+                </div>
+
+                <!-- Description (full width) -->
+                <div class="detail-item full-width">
+                    <span class="label"><i class="fas fa-align-left"></i> Description</span>
+                    <span class="value">{{ turf.description }}</span>
+                </div>
+
+                <!-- Facilities (full width) -->
+                <div class="detail-item full-width">
+                    <span class="label">
+                        <i class="fas fa-check-circle"></i> Facilities
+                    </span>
+
+                    <div class="facilities-list">
+
+                        {% for facility in turf.available_facilities.split %}
+                        <span>{{ facility }}</span>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <!-- Images (full width) -->
+                <div class="images-grid">
+
+                    {% if turf.image %}
+                    <img src="{{ turf.image.url }}" alt="{{ turf.turf_name }}">
+                    {% else %}
+                    <p>No image available.</p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+    </div>
+
+</body>
+
+</html>

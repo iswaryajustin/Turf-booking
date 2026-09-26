@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turfora · Manage Turfs</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f5fc;
+            color: #0b1d2b;
+            padding: 1.5rem;
+        }
+
+        .admin-wrapper {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* header */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            background: #ffffff;
+            padding: 1.2rem 2.5rem;
+            border-radius: 28px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            margin-bottom: 2rem;
+        }
+
+        .admin-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .admin-header .logo svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .admin-header .logo span {
+            background: linear-gradient(145deg, #0b1d2b, #1a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .admin-header .logo small {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #5d7388;
+            background: #eef3f8;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            -webkit-text-fill-color: #5d7388;
+            margin-left: 0.3rem;
+        }
+
+        .admin-header .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .admin-header .admin-info .badge {
+            background: #eef6ff;
+            color: #1a5cff;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .admin-header .admin-info .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 30px;
+            background: #1a5cff;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        /* dashboard layout */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 2rem;
+        }
+
+        /* sidebar */
+        .sidebar {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 1.5rem 1rem;
+            border: 1px solid #eef3f8;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+            align-self: start;
+            position: sticky;
+            top: 1.5rem;
+        }
+
+        .sidebar h4 {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #7a94af;
+            margin: 1.2rem 0 0.8rem 0.8rem;
+        }
+
+        .sidebar .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem 1rem;
+            border-radius: 14px;
+            color: #1e3a5f;
+            font-weight: 500;
+            transition: 0.15s;
+            cursor: pointer;
+            margin-bottom: 0.2rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .sidebar .menu-item i {
+            width: 22px;
+            color: #5f7d98;
+            font-size: 1rem;
+        }
+
+        .sidebar .menu-item.active {
+            background: #e5efff;
+            color: #1a5cff;
+        }
+
+        .sidebar .menu-item.active i {
+            color: #1a5cff;
+        }
+
+        .sidebar .menu-item:hover {
+            background: #edf4fd;
+        }
+
+        /* main content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* page header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .page-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .page-header h2 i {
+            color: #1a5cff;
+        }
+
+        .page-header .subtitle {
+            color: #5d7388;
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        /* toolbar */
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.8rem 1rem;
+            background: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid #e2eaf2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .toolbar .search-wrapper {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .toolbar .search-wrapper i {
+            color: #7a94af;
+            margin-right: 0.6rem;
+        }
+
+        .toolbar .search-wrapper input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .toolbar .search-wrapper input::placeholder {
+            color: #a0b8cf;
+        }
+
+        .toolbar .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .toolbar .filter-group select {
+            background: #f9fcff;
+            border: 1px solid #dce4ed;
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1e3a5f;
+            outline: none;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        /* buttons */
+        .btn {
+            padding: 0.5rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #1a5cff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f4ad6;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #e54c4c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c9302c;
+        }
+
+        .btn-warning {
+            background: #f5a623;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d4911e;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1e3a5f;
+            border: 1.5px solid #d0dce8;
+        }
+
+        .btn-outline:hover {
+            background: #f2f6fe;
+        }
+
+        .btn-sm {
+            padding: 0.3rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-xs {
+            padding: 0.15rem 0.7rem;
+            font-size: 0.7rem;
+        }
+
+        /* turf grid */
+        .turf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .turf-card {
+            background: #ffffff;
+            border-radius: 28px;
+            border: 1px solid #edf2f7;
+            overflow: hidden;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .turf-card:hover {
+            box-shadow: 0 8px 28px rgba(0, 20, 40, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .turf-card .turf-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #dce4ed;
+            display: block;
+        }
+
+        .turf-card .turf-body {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .turf-card .turf-body .turf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .turf-card .turf-body .turf-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .turf-card .turf-body .turf-header .status-badge {
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .status-badge.active {
+            background: #e3f0e5;
+            color: #1d6b3c;
+        }
+
+        .status-badge.inactive {
+            background: #f0f0f0;
+            color: #7a7a7a;
+        }
+
+        .status-badge.maintenance {
+            background: #ffefe3;
+            color: #b45a1c;
+        }
+
+        .turf-card .turf-body .turf-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3rem 1rem;
+            font-size: 0.85rem;
+            color: #2c5775;
+            margin: 0.6rem 0;
+        }
+
+        .turf-card .turf-body .turf-info .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .turf-card .turf-body .turf-info .info-item i {
+            color: #7a94af;
+            width: 16px;
+            font-size: 0.8rem;
+        }
+
+        .turf-card .turf-body .turf-description {
+            font-size: 0.85rem;
+            color: #5d7388;
+            margin: 0.4rem 0 0.6rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .turf-card .turf-body .turf-facilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem 0.6rem;
+            margin: 0.4rem 0 0.6rem;
+        }
+
+        .turf-card .turf-body .turf-facilities span {
+            background: #f0f5fc;
+            padding: 0.15rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #2c5775;
+        }
+
+        .turf-card .turf-body .turf-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid #edf2f7;
+        }
+
+        /* view details */
+        .view-details {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 2rem 2.5rem;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            margin-top: 1rem;
+        }
+
+        .view-details .view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .view-details .view-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .view-details .view-header h3 i {
+            color: #1a5cff;
+        }
+
+        .view-details .view-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 20px;
+            background: #dce4ed;
+            margin-bottom: 1.2rem;
+        }
+
+        .view-details .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem 2rem;
+            font-size: 0.95rem;
+        }
+
+        .view-details .detail-grid .detail-item {
+            display: flex;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid #f0f5fc;
+        }
+
+        .view-details .detail-grid .detail-item .label {
+            font-weight: 600;
+            color: #5d7388;
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        .view-details .detail-grid .detail-item .value {
+            color: #0b1d2b;
+        }
+
+        .view-details .facilities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .view-details .facilities-list span {
+            background: #f0f5fc;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #2c5775;
+        }
+
+        .view-details .view-actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #edf2f7;
+        }
+
+        /* form */
+        .form-section {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 2rem 2.5rem;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            margin-top: 1rem;
+        }
+
+        .form-section .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .form-section .form-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .form-section .form-header h3 i {
+            color: #1a5cff;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e3a5f;
+            margin-bottom: 0.3rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 16px;
+            border: 1.5px solid #e2eaf2;
+            background: #fafcff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: 0.15s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #1a5cff;
+            box-shadow: 0 4px 14px rgba(26, 92, 255, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .text-muted {
+            color: #7a94af;
+            font-size: 0.85rem;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .gap-1 {
+            gap: 0.5rem;
+        }
+
+        /* responsive */
+        @media (max-width: 1024px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.2rem;
+                padding: 1rem;
+                position: static;
+            }
+
+            .sidebar h4 {
+                display: none;
+            }
+
+            .sidebar .menu-item {
+                padding: 0.4rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .turf-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 0.8rem;
+            }
+
+            .admin-header {
+                padding: 1rem 1.2rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 24px;
+                padding: 1rem;
+            }
+
+            .toolbar .search-wrapper {
+                min-width: auto;
+            }
+
+            .turf-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .turf-card .turf-body .turf-info {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .view-details {
+                padding: 1.2rem 1rem;
+            }
+
+            .view-details .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .view-details .detail-grid .detail-item {
+                flex-direction: column;
+                gap: 0.2rem;
+            }
+
+            .view-details .detail-grid .detail-item .label {
+                width: auto;
+            }
+
+            .form-section {
+                padding: 1.2rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="admin-wrapper">
+
+        <!-- header -->
+        <header class="admin-header">
+            <div class="logo">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px;">
+                    <rect x="4" y="20" width="56" height="28" rx="14" fill="#8BC34A" opacity="0.9" />
+                    <rect x="8" y="24" width="48" height="20" rx="10" fill="#689F38" opacity="0.7" />
+                    <path d="M18 26 L28 20 L38 26 L32 34 L26 34 L18 26Z" fill="#CDDC39" opacity="0.9" />
+                    <path d="M32 20 L38 14 L44 20 L40 26 L34 26 L32 20Z" fill="#FFEB3B" opacity="0.8" />
+                    <circle cx="32" cy="40" r="6" fill="#33691E" opacity="0.6" />
+                    <circle cx="32" cy="40" r="3" fill="#AFB42B" opacity="0.9" />
+                </svg>
+                <span>Turfora</span>
+                <small>Admin</small>
+            </div>
+            <div class="admin-info">
+                <span class="badge"><i class="fas fa-shield-alt"></i> Super Admin</span>
+                <span style="font-weight:500;font-size:0.9rem;">admin@turfora.com</span>
+                <div class="avatar">A</div>
+            </div>
+        </header>
+
+        <!-- dashboard layout -->
+        <div class="dashboard-layout">
+
+            <!-- sidebar -->
+            <aside class="sidebar">
+                <a href="{%url 'admin_dashboard'%}" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="{% url 'manageusers'%}" class="menu-item"><i class="fas fa-users"></i> Manage Users</a>
+                <a href="#" class="menu-item active"><i class="fas fa-map-marker-alt"></i> Manage Turfs</a>
+                <a href="" class="menu-item"><i class="fas fa-calendar-alt"></i> Availability</a>
+                <a href="{%url 'managebookings'%}" class="menu-item"><i class="fas fa-calendar-check"></i> Manage Bookings</a>
+                <a href="{%url 'managepayments'%}" class="menu-item"><i class="fas fa-credit-card"></i> Payments</a>
+                <a href="{% url 'admin_reviews_ratings' %}" class="menu-item"><i class="fas fa-star"></i> Reviews & Ratings</a>
+                <h4>settings</h4>
+                <a href="#" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" class="menu-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </aside>
+
+            <!-- main content -->
+            <div class="main-content">
+
+                <!-- page header -->
+                <div class="page-header">
+                    <div>
+                        <h2><i class="fas fa-map-marker-alt"></i> Manage Turfs</h2>
+                        <span class="subtitle">Add, view, edit, delete, and manage turf status</span>
+                    </div>
+                    <a href="#add-turf" class="btn btn-primary"><i class="fas fa-plus"></i> Add Turf</a>
+                </div>
+
+                <!-- toolbar -->
+                <div class="toolbar">
+                    <form method="GET" action="{% url 'manageturfs' %}">
+                        <div class="search-wrapper">
+                            <i class="fas fa-search"></i>
+                            <input type="text" name="q" value="{{ query }}" placeholder="Search turfs..." />
+                        </div>
+                    </form>
+                </div>
+
+                <!-- turf grid -->
+                <div class="turf-grid">
+
+                    <!-- Turf Card 1 -->
+                    {% for turf in turfs %}
+
+                    <div class="turf-card">
+
+                        {% if turf.image %}
+                        <img src="{{ turf.image.url }}" class="turf-image" alt="{{ turf.turf_name }}">
+                        {% else %}
+                        <div class="turf-image"></div>
+                        {% endif %}
+
+
+                        <div class="turf-body">
+
+                            <div class="turf-header">
+
+                                <h3>{{ turf.turf_name }}</h3>
+
+                                {% if turf.is_active %}
+                                <span class="status-badge active">
+                                    Active
+                                </span>
+                                {% else %}
+                                <span class="status-badge inactive">
+                                    Inactive
+                                </span>
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="turf-info">
+
+                                <span class="info-item">
+                                    <i class="fas fa-map-pin"></i>
+                                    {{ turf.location }}
+                                </span>
+
+                                <span class="info-item">
+                                    <i class="fas fa-futbol"></i>
+                                    {{ turf.turf_type }}
+                                </span>
+
+                                <span class="info-item">
+                                    <i class="fas fa-tag"></i>
+                                    ₹{{ turf.price_per_hour }} / hour
+                                </span>
+
+                                <span class="info-item">
+                                    <i class="fas fa-star"></i>
+                                    {{ turf.rating }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="turf-description">
+                                {{ turf.description }}
+                            </div>
+
+
+                            <div class="turf-facilities">
+                                <span>{{ turf.available_facilities }}</span>
+                            </div>
+
+
+                            <div class="turf-actions">
+
+                                <a href="{% url 'viewturf' turf.id %}" class="btn btn-primary btn-xs">
+                                    <i class="fas fa-eye"></i>
+                                    View
+                                </a>
+
+                                <a href="{% url 'editturf' turf.id %}" class="btn btn-outline btn-xs">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                </a>
+                                {% if turf.is_active %}
+                                <a href="{% url 'deactivate_turf' turf.id %}" class="btn btn-warning btn-xs"
+                                    onclick="return confirm('Are you sure you want to deactivate this turf?');">
+                                    <i class="fas fa-ban"></i>
+                                    Deactivate
+                                </a>
+                                {% else %}
+                                <a href="{% url 'activate_turf' turf.id %}" class="btn btn-success btn-xs"
+                                    onclick="return confirm('Are you sure you want to activate this turf?');">
+                                    <i class="fas fa-check-circle"></i>
+                                    Activate
+                                </a>
+                                {% endif %}
+                                <a href="{% url 'delete_turf' turf.id %}" class="btn btn-danger btn-xs"
+                                    onclick="return confirm('Are you sure you want to delete this turf?');">
+                                    <i class="fas fa-trash"></i>
+                                    Delete
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% empty %}
+
+                    <p>No turfs available.</p>
+
+                    {% endfor %}
+
+                </div>
+
+                <!-- pagination -->
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; padding-top:0.5rem;">
+                    <span class="text-muted">Showing 1-2 of 15 turfs</span>
+                    <div class="flex gap-1">
+                        <a href="#" class="btn btn-outline btn-sm"><i class="fas fa-chevron-left"></i></a>
+                        <a href="#" class="btn btn-primary btn-sm">1</a>
+                        <a href="#" class="btn btn-outline btn-sm">2</a>
+                        <a href="#" class="btn btn-outline btn-sm">3</a>
+                        <a href="#" class="btn btn-outline btn-sm">...</a>
+                        <a href="#" class="btn btn-outline btn-sm">8</a>
+                        <a href="#" class="btn btn-outline btn-sm"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+
+
+
+                <!-- ===== ADD TURF FORM ===== -->
+                <div id="add-turf" class="form-section">
+                    <div class="form-header">
+                        <h3><i class="fas fa-plus-circle" style="color:#1a5cff;"></i> Add New Turf</h3>
+                        <a href="#" class="btn btn-outline btn-sm"><i class="fas fa-times"></i> Cancel</a>
+                    </div>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Turf Name *</label>
+                                <input type="text" name="turf_name" placeholder="Enter turf name" />
+                            </div>
+                            <div class="form-group">
+                                <label>Turf Type *</label>
+                                <select name="turf_type">
+                                    <option>Football</option>
+                                    <option>Cricket</option>
+                                    <option>Multipurpose</option>
+                                    <option>Basketball</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Location *</label>
+                                <input type="text" name="location" placeholder="Enter location" />
+                            </div>
+                            <div class="form-group">
+                                <label>Price / Hour (₹) *</label>
+                                <input type="number" name="price_per_hour" placeholder="Enter price" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Address *</label>
+                            <input type="text" name="address" placeholder="Enter full address" />
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" placeholder="Enter turf description"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Opening Time *</label>
+                                <input type="time" name="opening_time" />
+                            </div>
+                            <div class="form-group">
+                                <label>Closing Time *</label>
+                                <input type="time" name="closing_time" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Facilities (comma separated)</label>
+                            <input type="text" name="available_facilities"
+                                placeholder="e.g. Floodlights, Parking, Changing Room" />
+                        </div>
+                        <div class="form-group">
+                            <label>Images (URLs, one per line)</label>
+                            <textarea rows="2" name="image" placeholder="Enter image URLs, one per line"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Turf</button>
+                            <a href="#" class="btn btn-outline"><i class="fas fa-times"></i> Cancel</a>
+                        </div>
+                    </form>
+                </div>
+
+
+
+            </div> <!-- main-content -->
+        </div> <!-- dashboard-layout -->
+    </div> <!-- admin-wrapper -->
+
+</body>
+
+</html>

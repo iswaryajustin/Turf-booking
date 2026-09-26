@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turfora · Admin Login</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b1a26;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background-image:
+                radial-gradient(ellipse at 10% 20%, rgba(26, 92, 255, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 90% 80%, rgba(26, 92, 255, 0.05) 0%, transparent 60%),
+                linear-gradient(135deg, #0b1a26 0%, #132a3f 100%);
+        }
+
+        .admin-login-container {
+            max-width: 480px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            padding: 3rem 3rem 2.8rem;
+            transition: all 0.2s ease;
+        }
+
+        /* admin badge */
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(26, 92, 255, 0.15);
+            border: 1px solid rgba(26, 92, 255, 0.2);
+            padding: 0.3rem 1.2rem 0.3rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6ea8ff;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-badge i {
+            font-size: 0.9rem;
+        }
+
+        /* header */
+        .login-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .login-header .logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 0.4rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .login-header .logo-icon svg {
+            width: 44px;
+            height: 44px;
+            display: block;
+        }
+
+        .login-header .brand-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .login-header .brand-text h1 span {
+            background: linear-gradient(145deg, #6ea8ff, #1a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-header .brand-text .sub {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
+        }
+
+        /* form title */
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
+        }
+
+        .form-sub {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        /* form */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .field-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .field-group label i {
+            color: rgba(255, 255, 255, 0.3);
+            width: 16px;
+        }
+
+        .field-group .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            transition: 0.2s ease;
+            padding: 0 1.2rem;
+        }
+
+        .field-group .input-wrapper:focus-within {
+            border-color: rgba(26, 92, 255, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(26, 92, 255, 0.06);
+        }
+
+        .field-group .input-wrapper input {
+            width: 100%;
+            padding: 0.85rem 0 0.85rem 0.6rem;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            font-family: inherit;
+            color: #ffffff;
+            outline: none;
+        }
+
+        .field-group .input-wrapper input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 400;
+        }
+
+        /* password toggle */
+        .password-wrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            flex: 1;
+            padding: 0.85rem 0 0.85rem 0.6rem;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            font-family: inherit;
+            color: #ffffff;
+            outline: none;
+        }
+
+        .password-wrapper .toggle-pwd {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            padding: 0.4rem 0.2rem;
+            font-size: 1rem;
+            transition: 0.15s;
+        }
+
+        .password-wrapper .toggle-pwd:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* options */
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem 1rem;
+            margin: 0.2rem 0;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: default;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #1a5cff;
+            border-radius: 6px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            cursor: default;
+        }
+
+        .forgot-link {
+            font-size: 0.9rem;
+            color: #6ea8ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.15s;
+        }
+
+        .forgot-link:hover {
+            color: #8bbaff;
+        }
+
+        /* submit button */
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: #1a5cff;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            margin-top: 0.4rem;
+            transition: 0.2s ease;
+            box-shadow: 0 8px 24px -8px rgba(26, 92, 255, 0.35);
+            font-family: inherit;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+
+        .btn-submit:hover {
+            background: #0f4ad6;
+            transform: scale(1.01);
+            box-shadow: 0 12px 32px -10px rgba(26, 92, 255, 0.5);
+        }
+
+        /* footer */
+        .form-footer {
+            margin-top: 1.8rem;
+            text-align: center;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.4);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 1.8rem;
+        }
+
+        .form-footer a {
+            color: #6ea8ff;
+            font-weight: 500;
+            text-decoration: none;
+            transition: 0.15s;
+        }
+
+        .form-footer a:hover {
+            color: #8bbaff;
+        }
+
+        .form-footer .divider {
+            margin: 0 0.5rem;
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* responsive */
+        @media (max-width: 640px) {
+            .admin-login-container {
+                padding: 2rem 1.5rem 2rem;
+                border-radius: 32px;
+            }
+
+            .login-header .brand-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .login-header .logo-icon svg {
+                width: 36px;
+                height: 36px;
+            }
+
+            .form-title {
+                font-size: 1.3rem;
+            }
+
+            .field-group .input-wrapper input,
+            .password-wrapper input {
+                padding: 0.75rem 0 0.75rem 0.4rem;
+                font-size: 0.95rem;
+            }
+
+            .btn-submit {
+                font-size: 1rem;
+                padding: 0.9rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            body {
+                padding: 0.8rem;
+            }
+
+            .admin-login-container {
+                padding: 1.5rem 1rem 1.8rem;
+                border-radius: 24px;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="admin-login-container">
+
+        <!-- admin badge -->
+        <div class="admin-badge">
+            <i class="fas fa-shield-alt"></i> Admin Access
+        </div>
+
+        <!-- header -->
+        <div class="login-header">
+            <div class="logo-icon">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="20" width="56" height="28" rx="14" fill="#8BC34A" opacity="0.9" />
+                    <rect x="8" y="24" width="48" height="20" rx="10" fill="#689F38" opacity="0.7" />
+                    <path d="M18 26 L28 20 L38 26 L32 34 L26 34 L18 26Z" fill="#CDDC39" opacity="0.9" />
+                    <path d="M32 20 L38 14 L44 20 L40 26 L34 26 L32 20Z" fill="#FFEB3B" opacity="0.8" />
+                    <circle cx="32" cy="40" r="6" fill="#33691E" opacity="0.6" />
+                    <circle cx="32" cy="40" r="3" fill="#AFB42B" opacity="0.9" />
+                    <path d="M10 34 L14 30 L18 34 L14 38 L10 34Z" fill="#AED581" opacity="0.7" />
+                    <path d="M50 34 L54 30 L58 34 L54 38 L50 34Z" fill="#AED581" opacity="0.7" />
+                    <circle cx="22" cy="32" r="2" fill="#FFF" opacity="0.15" />
+                    <circle cx="42" cy="32" r="2" fill="#FFF" opacity="0.15" />
+                    <circle cx="32" cy="28" r="18" stroke="white" stroke-opacity="0.06" stroke-width="1.5" />
+                </svg>
+            </div>
+            <div class="brand-text">
+                <h1><span>Turfora</span></h1>
+                <div class="sub">Admin Panel</div>
+            </div>
+        </div>
+
+        <!-- title -->
+        <h2 class="form-title">Welcome back, Admin</h2>
+        <p class="form-sub">Sign in to manage your turf booking platform.</p>
+
+        <!-- login form -->
+        <form class="login-form" action="{% url 'admin_login' %}" method="post">
+             {% csrf_token %}
+            <!-- Email / Username -->
+            <div class="field-group">
+                <label for="loginIdentifier"><i class="fas fa-user"></i> Email or username</label>
+                <div class="input-wrapper">
+                    <input type="text" id="username" name="username" placeholder="admin@turfora.com"
+                        required />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="field-group">
+                <label for="password"><i class="fas fa-lock"></i> Password</label>
+                <div class="input-wrapper">
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Enter your password"
+                            required />
+                        <button type="button" class="toggle-pwd" id="togglePassword"
+                            aria-label="Toggle password visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember" checked />
+                    Remember me
+                </label>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-sign-in-alt"></i> Sign in as Admin
+            </button>
+
+        </form>
+
+        <!-- footer -->
+        <div class="form-footer">
+            <span>Return to</span>
+            <a href="#">User Login</a>
+            <span class="divider">•</span>
+            <a href="#">Home</a>
+        </div>
+
+    </div>
+
+    <!-- password toggle script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const togglePwd = document.getElementById('togglePassword');
+            const pwdInput = document.getElementById('password');
+            togglePwd.addEventListener('click', function () {
+                const icon = this.querySelector('i');
+                if (pwdInput.type === 'password') {
+                    pwdInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    pwdInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

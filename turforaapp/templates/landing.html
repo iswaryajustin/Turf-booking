@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turfora · Turf booking</title>
+    <!-- modern CSS3 – desktop landing with full background image -->
+    <style>
+        /* ----- reset & base ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0b1a26;
+            /* fallback */
+            padding: 1.5rem;
+            color: #fff;
+        }
+
+        /* main card – glassmorphism container */
+        .landing {
+            max-width: 1360px;
+            width: 100%;
+            border-radius: 48px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7), 0 10px 30px -8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            background: #0f212f;
+            /* fallback */
+            transition: all 0.2s ease;
+        }
+
+        /* ----- full background image with overlay ----- */
+        .landing-bg {
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center 30%;
+            background-repeat: no-repeat;
+            min-height: 720px;
+            display: flex;
+            align-items: center;
+            padding: 3rem 4rem;
+        }
+
+        /* dark overlay for readability */
+        .landing-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(8, 28, 45, 0.80) 0%, rgba(0, 10, 20, 0.65) 100%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            z-index: 0;
+        }
+
+        /* all content sits above overlay */
+        .landing-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* ----- header: logo + nav (only logo visible, no left details) ----- */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            width: 100%;
+        }
+
+        /* LOGO – custom, related to "Turfora" (turf + aura / leaf / pitch) */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 2.2rem;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 20px;
+            padding: 0.4rem 0.6rem 0.4rem 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo-icon svg {
+            width: 44px;
+            height: 44px;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .logo-text {
+            background: linear-gradient(to right, #f0f9ff, #cde3ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 12px rgba(0, 40, 80, 0.3);
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.3px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(2px);
+        }
+
+        /* ----- main hero (centered) ----- */
+        .hero-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 820px;
+            margin: 1.5rem auto 0.8rem;
+            padding: 1rem 0.5rem;
+        }
+
+        .hero-center h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+            text-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-center h1 .highlight {
+            background: linear-gradient(145deg, #b6d6ff, #6ea8ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(70, 150, 255, 0.2);
+        }
+
+        .hero-center .subhead {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin-bottom: 2.8rem;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            backdrop-filter: blur(2px);
+            padding: 0.2rem 1rem;
+        }
+
+        /* ----- action buttons (login / register) – large, prominent ----- */
+        .action-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.8rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.25rem;
+            letter-spacing: -0.01em;
+            text-decoration: none;
+            transition: 0.2s ease;
+            border: 1.5px solid transparent;
+            cursor: default;
+            background: transparent;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: #0b1d2b;
+            border-color: #ffffff;
+            box-shadow: 0 8px 28px -8px rgba(0, 0, 0, 0.5);
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            background: #f0f7ff;
+            border-color: #f0f7ff;
+            transform: scale(1.03);
+            box-shadow: 0 14px 32px -10px rgba(0, 0, 0, 0.6);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.45);
+            transform: scale(1.03);
+        }
+
+        .btn i,
+        .btn .icon-symbol {
+            margin-right: 0.7rem;
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        /* small footer / meta */
+        .footer-meta {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 1.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            letter-spacing: 0.2px;
+            gap: 0.8rem 1.5rem;
+            width: 100%;
+        }
+
+        .footer-meta .stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-meta .stats span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .footer-meta .dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #6ea8ff;
+            border-radius: 10px;
+            margin-right: 0.3rem;
+            opacity: 0.7;
+        }
+
+        .footer-meta a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            margin-left: 1.2rem;
+            transition: 0.2s;
+        }
+
+        .footer-meta a:hover {
+            color: #fff;
+        }
+
+        /* ----- responsive (desktop first) ----- */
+        @media (max-width: 1024px) {
+            .landing-bg {
+                min-height: 620px;
+                padding: 2.5rem 2.8rem;
+            }
+
+            .hero-center h1 {
+                font-size: 3.8rem;
+            }
+
+            .btn {
+                padding: 0.9rem 2.4rem;
+                font-size: 1.1rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .logo-icon svg {
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        @media (max-width: 820px) {
+            .landing-bg {
+                min-height: 540px;
+                padding: 2rem 1.8rem;
+                background-position: 35% 30%;
+            }
+
+            .hero-center h1 {
+                font-size: 3rem;
+            }
+
+            .hero-center .subhead {
+                font-size: 1.1rem;
+            }
+
+            .action-group {
+                gap: 0.8rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.8rem;
+                font-size: 1rem;
+            }
+
+            .footer-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+
+            .footer-meta .stats {
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.8rem;
+            }
+
+            .landing {
+                border-radius: 28px;
+            }
+
+            .landing-bg {
+                min-height: 460px;
+                padding: 1.5rem 1.2rem;
+                background-position: 40% 25%;
+            }
+
+            .hero-center h1 {
+                font-size: 2.4rem;
+            }
+
+            .hero-center .subhead {
+                font-size: 0.95rem;
+                margin-bottom: 2rem;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.8rem 1.2rem;
+            }
+
+            .action-group {
+                width: 100%;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .logo-icon svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            .logo-sub {
+                font-size: 0.7rem;
+                padding: 0.1rem 0.7rem;
+            }
+        }
+
+        /* small polish */
+        .text-muted {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="landing">
+        <div class="landing-bg">
+            <!-- dark overlay via pseudo-element -->
+
+            <div class="landing-content">
+                <!-- header: logo only (no left details) -->
+                <header class="header">
+                    <div class="logo">
+                        <span class="logo-icon">
+                            <!-- custom logo: turf + leaf / pitch – related to "Turfora" -->
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="20" width="56" height="28" rx="14" fill="#8BC34A" opacity="0.9" />
+                                <rect x="8" y="24" width="48" height="20" rx="10" fill="#689F38" opacity="0.7" />
+                                <path d="M18 26 L28 20 L38 26 L32 34 L26 34 L18 26Z" fill="#CDDC39" opacity="0.9" />
+                                <path d="M32 20 L38 14 L44 20 L40 26 L34 26 L32 20Z" fill="#FFEB3B" opacity="0.8" />
+                                <circle cx="32" cy="40" r="6" fill="#33691E" opacity="0.6" />
+                                <circle cx="32" cy="40" r="3" fill="#AFB42B" opacity="0.9" />
+                                <path d="M10 34 L14 30 L18 34 L14 38 L10 34Z" fill="#AED581" opacity="0.7" />
+                                <path d="M50 34 L54 30 L58 34 L54 38 L50 34Z" fill="#AED581" opacity="0.7" />
+                                <circle cx="22" cy="32" r="2" fill="#FFF" opacity="0.2" />
+                                <circle cx="42" cy="32" r="2" fill="#FFF" opacity="0.2" />
+                                <!-- subtle glow -->
+                                <circle cx="32" cy="28" r="18" stroke="white" stroke-opacity="0.08"
+                                    stroke-width="1.5" />
+                            </svg>
+                        </span>
+                        <span class="logo-text">Turfora</span>
+                        <span class="logo-sub">⚡ turf</span>
+                    </div>
+                    <!-- empty right side – no extra details -->
+                    <div style="flex:1; min-width:20px;"></div>
+                </header>
+
+                <!-- main hero: centered, with login/register -->
+                <div class="hero-center">
+                    <h1>
+                        Play on <span class="highlight">perfect grass</span><br />
+                        every time.
+                    </h1>
+                    <p class="subhead">
+                        Find, book, and enjoy the best turfs near you —<br />
+                        real-time availability, instant confirmation.
+                    </p>
+
+                    <!-- login & register buttons (static) -->
+                    <div class="action-group">
+                        <a href="{%url 'login'%}" class="btn btn-primary" aria-label="Login to Turfora">
+                            <span class="icon-symbol">🔑</span> Log in
+                        </a>
+                        <a href="{%url 'register'%}" class="btn btn-outline" aria-label="Register for Turfora">
+                            <span class="icon-symbol">✨</span> Register
+                        </a>
+                    </div>
+
+                    <!-- small trust / meta (no left details box) -->
+                    <div class="footer-meta">
+                        <div class="stats">
+                            <span><span class="dot"></span> 2,400+ bookings today</span>
+                            <span>⭐ 4.9 · 1.2k reviews</span>
+                            <span>📱 iOS · Android</span>
+                        </div>
+                        <div>
+                            <span style="opacity:0.5;">© 2026 Turfora</span>
+                            <a href="#">Privacy</a>
+                            <a href="#">Terms</a>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /landing-content -->
+        </div> <!-- /landing-bg -->
+    </main>
+
+    <!-- no left side details box – only background image + centered hero -->
+</body>
+
+</html>

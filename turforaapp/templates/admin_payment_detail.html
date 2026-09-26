@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Payment Details · Turfora</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f5fc;
+            padding: 40px;
+        }
+
+        .card {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 20px;
+            background: #1a5cff;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Payment Details</h2>
+
+    <div class="row">
+        <span class="label">Booking ID</span>
+        <span>#TUR-{{ payment.booking.id }}</span>
+    </div>
+
+    <div class="row">
+        <span class="label">User</span>
+        <span>{{ payment.booking.player.username }}</span>
+    </div>
+
+    <div class="row">
+        <span class="label">Turf</span>
+        <span>{{ payment.booking.turf.turf_name }}</span>
+    </div>
+
+    <div class="row">
+        <span class="label">Amount</span>
+        <span>₹{{ payment.amount|floatformat:2 }}</span>
+    </div>
+
+    <div class="row">
+        <span class="label">Payment Status</span>
+        <span>{{ payment.get_status_display }}</span>
+    </div>
+
+    <div class="row">
+        <span class="label">Payment Date</span>
+        <span>{{ payment.payment_date|date:"M d, Y h:i A" }}</span>
+    </div>
+
+    <a href="{% url 'managepayments' %}" class="back">
+        ← Back to Payments
+    </a>
+
+</div>
+
+</body>
+</html>
